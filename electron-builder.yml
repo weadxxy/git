@@ -1,0 +1,43 @@
+appId: com.weadxxy.lumenfall
+productName: Lumenfall
+copyright: Copyright © 2026 weadxxy
+asar: true
+npmRebuild: false
+directories:
+  output: dist
+  buildResources: desktop/assets
+files:
+  - index.html
+  - game.js
+  - style.css
+  - favicon.svg
+  - desktop/main.cjs
+  - desktop/preload.cjs
+  - desktop/assets/icon.png
+  - package.json
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+  icon: desktop/assets/icon.ico
+  # No signing certificate is configured. Resource/icon editing stays enabled.
+  signExecutable: false
+  artifactName: Lumenfall-${version}-Windows-${arch}-Setup.${ext}
+nsis:
+  oneClick: false
+  perMachine: false
+  allowElevation: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: always
+  createStartMenuShortcut: true
+  shortcutName: 微光之境 Lumenfall
+  uninstallDisplayName: 微光之境 Lumenfall
+  installerLanguages: [zh_CN, en_US]
+  displayLanguageSelector: true
+  runAfterFinish: true
+  deleteAppDataOnUninstall: false
+portable:
+  artifactName: Lumenfall-${version}-Windows-${arch}-Portable.${ext}
+linux:
+  category: Game
+  icon: desktop/assets/icon.png

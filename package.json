@@ -1,13 +1,28 @@
 {
   "name": "lumenfall",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
+  "main": "desktop/main.cjs",
+  "author": "weadxxy",
   "description": "A hand-crafted pixel art adventure through a bioluminescent forest.",
   "scripts": {
-    "dev": "node server.mjs",
-    "start": "node server.mjs",
-    "check": "node --check game.js && node --check server.mjs"
+    "dev": "electron .",
+    "start": "electron .",
+    "dev:web": "node server.mjs",
+    "postinstall": "install-electron",
+    "build:win": "electron-builder --win nsis --x64 --publish never",
+    "build:portable": "electron-builder --win portable --x64 --publish never",
+    "build:dir": "electron-builder --dir --publish never",
+    "test:desktop": "node tests/desktop_test.mjs",
+    "check": "node --check game.js && node --check server.mjs && node --check desktop/main.cjs && node --check desktop/preload.cjs && node --check tests/desktop_test.mjs"
   },
-  "engines": { "node": ">=18" }
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "devDependencies": {
+    "electron": "44.7.2",
+    "electron-builder": "26.15.3",
+    "playwright-core": "1.58.2"
+  }
 }

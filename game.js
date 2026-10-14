@@ -1,4 +1,10 @@
 const $ = (id) => document.getElementById(id);
+if (window.lumenfall?.isDesktop) {
+  document.documentElement.classList.add('desktop');
+  document.title = '微光之境 · Lumenfall';
+  document.querySelector('.version').textContent = 'DESKTOP · v1.1';
+  document.querySelector('footer > span:last-child').textContent = 'F11 全屏 · Ctrl + Q 退出';
+}
 const canvas = $('game');
 const ctx = canvas.getContext('2d', { alpha: false });
 const W = 960, H = 540, WORLD = 5200, REQUIRED = 8;
@@ -483,6 +489,10 @@ $('fullscreen-button').addEventListener('click',async()=>{
   if(mode==='playing')canvas.focus({preventScroll:true});
 });
 document.addEventListener('fullscreenchange',()=>{$('fullscreen-button').setAttribute('aria-label',document.fullscreenElement?'退出全屏':'全屏游戏');});
+$('fullscreen-exit').addEventListener('click',async()=>{
+  if(document.fullscreenElement)await document.exitFullscreen();
+  if(mode==='playing')canvas.focus({preventScroll:true});
+});
 $('modal-primary').addEventListener('click',()=>{
   if(modalKind==='won')start();else if(modalKind==='dead')respawn();else closeModal();
 });

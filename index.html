@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a1210">
+  <meta name="description" content="微光之境：一款可以在浏览器中游玩的横版像素冒险游戏。带上微光，穿越萤火森林。">
+  <title>微光之境 · Lumenfall</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="page-glow" aria-hidden="true"></div>
+  <main class="shell">
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="微光之境首页">
+        <span class="brand-mark" aria-hidden="true">✦</span>
+        <span class="brand-text">微光之境<small>LUMENFALL</small></span>
+      </a>
+      <div class="header-note"><span></span> 一场关于光的冒险</div>
+      <button class="text-button" id="help-button"><span class="key-icon">?</span> 游玩指南</button>
+    </header>
+
+    <section class="game-section" aria-label="微光之境游戏">
+      <div class="game-heading">
+        <div class="chapter"><span class="chapter-number">01</span><span>萤火森林 <b>/</b> <small>THE FIREFLY WOODS</small></span></div>
+        <div class="toolbar">
+          <button id="sound-button" class="icon-button" aria-label="开启声音" title="开启声音" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path id="sound-wave" d="m16 9 6 6m0-6-6 6"/></svg></button>
+          <button id="pause-button" class="icon-button" aria-label="暂停游戏" title="暂停 / Esc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 5v14M16 5v14"/></svg></button>
+          <span class="toolbar-divider"></span>
+          <button id="fullscreen-button" class="icon-button" aria-label="全屏游戏" title="全屏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/></svg></button>
+        </div>
+      </div>
+
+      <div class="game-frame" id="game-frame">
+        <canvas id="game" width="960" height="540" tabindex="0" aria-label="微光之境。使用方向键或 A D 移动，空格跳跃，J 挥剑，K 冲刺。"></canvas>
+        <div class="vignette" aria-hidden="true"></div>
+        <div class="hud" id="hud">
+          <div class="player-hud"><span class="avatar" aria-hidden="true">✦</span><div><div class="hud-label">旅 人 <span>THE WANDERER</span></div><div id="hearts" aria-label="生命值 3 / 3"><span>♥</span><span>♥</span><span>♥</span></div></div></div>
+          <div class="objective-hud"><span class="crystal-icon" aria-hidden="true"></span><span id="crystal-count">00</span><span class="hud-denominator">/ 08</span><span class="hud-label">光之碎片</span></div>
+        </div>
+
+        <div class="intro" id="intro">
+          <div class="eyebrow"><span></span> A LITTLE LIGHT IN THE DARK</div>
+          <h1>循着微光，<br>走入<span>森林深处。</span></h1>
+          <p>当最后一颗星坠入森林，<br>你是那个，重新点亮世界的人。</p>
+          <button class="primary-button" id="start-button"><span>开启旅途</span><span class="button-arrow">→</span></button>
+          <div class="intro-hint"><span class="mini-key">↵</span> 按 Enter 开始 · 建议佩戴耳机</div>
+        </div>
+        <div class="scene-caption" id="scene-caption"><span class="caption-line"></span><span>迷路也没关系。<br><small>萤火会记得回家的方向。</small></span></div>
+        <div class="location-label" id="location-label"><span>✧</span> 萤火之森 <span>✧</span></div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <div class="dash-meter" id="dash-meter"><span>冲刺</span><i><b id="dash-fill"></b></i><kbd>K</kbd></div>
+        <div class="touch-controls" id="touch-controls" aria-label="触屏控制">
+          <div class="touch-movement"><button data-control="left" aria-label="向左">◀</button><button data-control="right" aria-label="向右">▶</button></div>
+          <div class="touch-actions"><button data-control="attack" aria-label="挥剑">剑</button><button data-control="dash" aria-label="冲刺">闪</button><button data-control="jump" aria-label="跳跃">↑</button></div>
+        </div>
+
+        <div class="modal-backdrop" id="modal" hidden>
+          <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+            <div class="modal-star" aria-hidden="true">✧</div>
+            <div class="eyebrow" id="modal-eyebrow">TAKE A LITTLE BREATH</div>
+            <h2 id="modal-title">让微光，等一等。</h2>
+            <div id="modal-description"></div>
+            <button class="primary-button" id="modal-primary">继续旅途 <span>→</span></button>
+            <button class="secondary-button" id="restart-button">重新出发</button>
+          </section>
+        </div>
+      </div>
+
+      <div class="game-bottom">
+        <div class="world-status"><span class="status-dot"></span><span id="status-text">森林正在呼吸</span><span class="status-separator">/</span><span class="ambient-label">AMBIENT ADVENTURE</span></div>
+        <span class="version">CHAPTER I <span>·</span> v1.0</span>
+      </div>
+    </section>
+
+    <section class="below-game" aria-label="操作说明">
+      <div class="journey-note"><span class="little-spark">✧</span><p>不必匆忙，光会指引你。<small>收集 8 枚光之碎片，唤醒森林尽头的古老星门。</small></p></div>
+      <div class="keyboard-guide">
+        <div><span><kbd>A</kbd><kbd>D</kbd></span><small>移动</small></div>
+        <div><span><kbd class="wide-key">SPACE</kbd></span><small>二段跳</small></div>
+        <div><span><kbd>J</kbd></span><small>挥剑</small></div>
+        <div><span><kbd>K</kbd></span><small>冲刺</small></div>
+      </div>
+    </section>
+    <footer><span>CRAFTED WITH PIXELS & A LITTLE MAGIC</span><span>愿每一段旅程，都有微光相伴 <span class="footer-star">✦</span></span></footer>
+  </main>
+  <script type="module" src="./game.js"></script>
+</body>
+</html>
